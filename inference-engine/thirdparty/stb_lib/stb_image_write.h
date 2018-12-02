@@ -226,6 +226,7 @@ static void stbi__start_write_callbacks(stbi__write_context *s, stbi_write_func 
 static void stbi__stdio_write(void *context, void *data, int size)
 {
    fwrite(data,1,size,(FILE*) context);
+   (void)unused;
 }
 
 static int stbi__start_write_file(stbi__write_context *s, const char *filename)
@@ -1012,7 +1013,8 @@ STBIWDEF int stbi_write_png(char const *filename, int x, int y, int comp, const 
    if (png == NULL) return 0;
    f = fopen(filename, "wb");
    if (!f) { STBIW_FREE(png); return 0; }
-   fwrite(png, 1, len, f);
+   size_t unused = fwrite(png, 1, len, f);
+   (void)unused;
    fclose(f);
    STBIW_FREE(png);
    return 1;
