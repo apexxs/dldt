@@ -79,6 +79,11 @@ include_directories(
         ${MKLDNN_ROOT}/src/cpu/xbyak
 )
 
+if(MSVC)
+    set_source_files_properties(${MKLDNN_ROOT}/src/cpu/cpu_memory.cpp PROPERTIES COMPILE_FLAGS "$<$<CONFIG:Debug>:/bigobj>")
+    set_source_files_properties(${MKLDNN_ROOT}/src/cpu/cpu_reorder.cpp PROPERTIES COMPILE_FLAGS "$<$<CONFIG:Debug>:/bigobj>")
+endif()
+
 if(WIN32)
     add_definitions(-D_WIN)
     add_definitions(-DNOMINMAX)
